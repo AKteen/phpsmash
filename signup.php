@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result->num_rows > 0) {
             echo "<div class='alert alert-danger'>Username or email already exists!</div>";
         } else {
-            $sql = "INSERT INTO users (username, email, password, Date) VALUES ('$username', '$email', '$password', NOW())";
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (username, email, password, Date) VALUES ('$username', '$email', '$hashedPassword', NOW())";
             
             if ($conn->query($sql) === TRUE) {
                 echo "<div class='alert alert-success'>Registration successful!</div>";
